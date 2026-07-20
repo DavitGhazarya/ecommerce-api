@@ -9,15 +9,13 @@ depends_on = None
 
 
 def upgrade() -> None:
-    user_role = sa.Enum("user", "admin", name="user_role")
-    user_role.create(op.get_bind(), checkfirst=True)
     op.create_table(
         "users",
         sa.Column("id", sa.Integer(), primary_key=True),
         sa.Column("username", sa.String(length=50), nullable=False),
         sa.Column("email", sa.String(length=255), nullable=False),
         sa.Column("hashed_password", sa.String(length=255), nullable=False),
-        sa.Column("role", user_role, nullable=False, server_default="user"),
+        sa.Column("role", sa.Enum("user", "admin", name="user_role"), nullable=False, server_default="user"),
         sa.Column("created_at", sa.DateTime(timezone=True), server_default=sa.text("now()"), nullable=False),
         sa.UniqueConstraint("username"),
         sa.UniqueConstraint("email"),

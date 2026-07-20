@@ -18,7 +18,7 @@ class User(Base):
     email = Column(String(255), unique=True, index=True, nullable=False)
     hashed_password = Column(String(255), nullable=False)
     role = Column(
-        Enum(UserRole, name="user_role"),
+        Enum(UserRole, name="user_role", values_callable=lambda enum_cls: [member.value for member in enum_cls]),
         nullable=False,
         default=UserRole.USER,
     )
