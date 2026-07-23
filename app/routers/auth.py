@@ -22,11 +22,17 @@ from app.models.role import UserRole
 from app.schemas.auth import (
     Token,
     UserCreate,
-    UserRead
+    UserRead,
+    ForgotPasswordRequest,
+    ResetPasswordRequest
 )
-
+from app.schemas.user import UserResponse
 from app.services.email_service import send_verification_email
+from app.services.token_service import create_user_refresh_token
 
+from app.core.email_service import send_reset_email
+import secrets
+from datetime import datetime, timedelta
 
 router = APIRouter(
     prefix="/auth",
@@ -61,7 +67,8 @@ def register_user(
 
 
     verification_token = generate_token()
-
+    print("USERNAME:", payload.username)
+    print("EMAIL:", payload.email)
     user = User(
         username=payload.username,
         email=str(payload.email),
@@ -155,11 +162,19 @@ def login(
             }
         )
 
+    access_token = create_access_token(
+        str(user.id)
+    )
+
+    refresh_token = create_user_refresh_token(
+        db,
+        user.id
+    )
 
     return Token(
-        access_token=create_access_token(
-            str(user.id)
-        )
+        access_token=access_token,
+        refresh_token=refresh_token,
+        token_type="bearer"
     )
 
 
@@ -179,7 +194,95 @@ def read_current_user(
     return current_user
 
 
+@router.post("/forgot-password")
+def forgot_password(
+    data: ForgotPasswordRequest,
+    db: Session = Depends(get_db)
+):
 
+    user = (
+        db.query(User)
+        .filter(User.email == data.email)
+        .first()
+    )
+
+
+    if not user:
+        return {
+            "message": "If email exists, reset link was sent"
+        }
+
+
+    token = secrets.token_urlsafe(32)
+
+
+    user.reset_password_token = token
+
+    user.reset_password_token_expire = (
+        datetime.utcnow()
+        + timedelta(minutes=30)
+    )
+
+
+    db.commit()
+
+
+    send_reset_email(
+        user.email,
+        token
+    )
+
+
+    return {
+        "message": "Reset email sent"
+    }
+@router.post("/reset-password")
+def reset_password(
+    data: ResetPasswordRequest,
+    db: Session = Depends(get_db)
+):
+
+    user = (
+        db.query(User)
+        .filter(
+            User.reset_password_token == data.token
+        )
+        .first()
+    )
+
+
+    if not user:
+        raise HTTPException(
+            status_code=400,
+            detail="Invalid token"
+        )
+
+
+    if (
+        user.reset_password_token_expire
+        < datetime.utcnow()
+    ):
+        raise HTTPException(
+            status_code=400,
+            detail="Token expired"
+        )
+
+
+    user.password_hash = hash_password(
+        data.new_password
+    )
+
+
+    user.reset_password_token = None
+    user.reset_password_token_expire = None
+
+
+    db.commit()
+
+
+    return {
+        "message": "Password changed successfully"
+    }
 # ADMIN CREATE SELLER
 @router.post(
     "/register-seller",

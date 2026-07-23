@@ -1,9 +1,8 @@
 from datetime import datetime
 
-from pydantic import BaseModel, ConfigDict, EmailStr, Field
+from pydantic import BaseModel, ConfigDict, EmailStr, Field, BaseModel
 
 from app.models.user import UserRole
-
 
 class UserCreate(BaseModel):
     username: str = Field(min_length=3, max_length=50, pattern=r"^[a-zA-Z0-9_]+$")
@@ -21,6 +20,20 @@ class UserRead(BaseModel):
     created_at: datetime
 
 
+
 class Token(BaseModel):
     access_token: str
-    token_type: str = "bearer"
+    refresh_token: str
+    token_type: str
+
+
+
+
+class ForgotPasswordRequest(BaseModel):
+    email: EmailStr
+
+
+
+class ResetPasswordRequest(BaseModel):
+    token: str
+    new_password: str

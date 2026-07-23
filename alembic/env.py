@@ -10,8 +10,10 @@ config.set_main_option(
     "sqlalchemy.url",
     settings.DATABASE_URL.replace("postgresql://", "postgresql+psycopg://", 1),
 )
-target_metadata = Base.metadata
+from app.models import user
+from app.models import product
 
+target_metadata = Base.metadata
 
 def run_migrations_offline() -> None:
     context.configure(
