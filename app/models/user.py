@@ -57,19 +57,17 @@ class User(Base):
         nullable=False
     )
 
-
     role = Column(
         Enum(
             UserRole,
             name="user_role",
-            values_callable=lambda enum_cls: [
-                member.value for member in enum_cls
+            values_callable=lambda enum_class: [
+                item.value for item in enum_class
             ]
         ),
-        nullable=False,
-        default=UserRole.USER
+        default=UserRole.USER,
+        nullable=False
     )
-
 
     is_verified = Column(
         Boolean,
@@ -108,4 +106,9 @@ class User(Base):
     products = relationship(
         "Product",
         back_populates="seller"
+    )
+    cart = relationship(
+        "Cart",
+        back_populates="user",
+        uselist=False
     )

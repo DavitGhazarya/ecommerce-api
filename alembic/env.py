@@ -12,7 +12,8 @@ config.set_main_option(
 )
 from app.models import user
 from app.models import product
-
+from app.models import cart
+from app.models import cart_item
 target_metadata = Base.metadata
 
 def run_migrations_offline() -> None:

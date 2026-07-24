@@ -283,22 +283,69 @@ def reset_password(
     return {
         "message": "Password changed successfully"
     }
-# ADMIN CREATE SELLER
+# # ADMIN CREATE SELLER
+# @router.post(
+#     "/register-seller",
+#     response_model=UserRead
+# )
+# def register_seller(
+#     payload: UserCreate,
+#
+#     db: Annotated[
+#         Session,
+#         Depends(get_db)
+#     ],
+#
+#     current_user: Annotated[
+#         User,
+#         Depends(admin_only)
+#     ]
+# ):
+#
+#     existing_user = db.query(User).filter(
+#         or_(
+#             User.email == payload.email,
+#             User.username == payload.username
+#         )
+#     ).first()
+#
+#
+#     if existing_user:
+#         raise HTTPException(
+#             status_code=409,
+#             detail="User already exists"
+#         )
+#
+#
+#     user = User(
+#         username=payload.username,
+#         email=str(payload.email),
+#
+#         hashed_password=hash_password(
+#             payload.password
+#         ),
+#
+#         role=UserRole.SELLER,
+#
+#         is_verified=True
+#     )
+#
+#
+#     db.add(user)
+#     db.commit()
+#     db.refresh(user)
+#
+#
+#     return user
 @router.post(
     "/register-seller",
     response_model=UserRead
 )
 def register_seller(
     payload: UserCreate,
-
     db: Annotated[
         Session,
         Depends(get_db)
-    ],
-
-    current_user: Annotated[
-        User,
-        Depends(admin_only)
     ]
 ):
 

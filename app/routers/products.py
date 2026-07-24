@@ -158,8 +158,8 @@ def update(
     )
 @router.delete("/{id}")
 def delete(
-    id:int,
-    db:Session = Depends(get_db),
+    id: int,
+    db: Session = Depends(get_db),
     user=Depends(get_current_user)
 ):
 
@@ -168,23 +168,24 @@ def delete(
         id
     )
 
-
     if not product:
         raise HTTPException(
-            404,
-            "Product not found"
+            status_code=404,
+            detail="Product not found"
         )
 
     if (
-            product.seller_id != user.id
-            and user.role.value != "admin"
+        product.seller_id != user.id
+        and user.role.value != "admin"
     ):
         raise HTTPException(
             status_code=403,
             detail="Not allowed"
         )
 
+    db.delete(product)
+    db.commit()
 
     return {
-        "message":"Product deleted"
+        "message": "Product deleted"
     }
