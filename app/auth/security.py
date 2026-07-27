@@ -11,11 +11,16 @@ password_context = CryptContext(
     schemes=["bcrypt"],
     deprecated="auto"
 )
-
+import bcrypt
+print(bcrypt.__version__)
 
 def hash_password(password: str):
+    if len(password.encode("utf-8")) > 72:
+        raise ValueError("Password too long")
+    print("PASSWORD:", repr(password))
+    print("LENGTH:", len(password))
+    print("BYTES:", len(password.encode("utf-8")))
     return password_context.hash(password)
-
 
 def verify_password(password: str, hashed_password: str):
     return password_context.verify(

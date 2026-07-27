@@ -1,14 +1,46 @@
-def send_verification_email(
-    email: str,
-    token: str
+# def send_verification_email(
+#     email: str,
+#     token: str
+# ):
+#
+#     link = (
+#         "http://127.0.0.1:8000/auth/verify-email"
+#         f"?token={token}"
+#     )
+#
+#     print("----------------")
+#     print("EMAIL TO:", email)
+#     print("VERIFY LINK:", link)
+#     print("----------------")
+import smtplib
+from email.message import EmailMessage
+
+from app.config import settings
+
+
+def send_email(
+    recipient: str,
+    subject: str,
+    body: str
 ):
+    message = EmailMessage()
 
-    link = (
-        "http://127.0.0.1:8000/auth/verify-email"
-        f"?token={token}"
-    )
+    message["From"] = settings.SMTP_USER
+    message["To"] = recipient
+    message["Subject"] = subject
 
-    print("----------------")
-    print("EMAIL TO:", email)
-    print("VERIFY LINK:", link)
-    print("----------------")
+    message.set_content(body)
+
+    with smtplib.SMTP(
+        settings.SMTP_HOST,
+        settings.SMTP_PORT
+    ) as server:
+
+        server.starttls()
+
+        server.login(
+            settings.SMTP_USER,
+            settings.SMTP_PASSWORD
+        )
+
+        server.send_message(message)

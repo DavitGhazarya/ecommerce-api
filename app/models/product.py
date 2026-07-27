@@ -87,3 +87,7 @@ class Product(Base):
         "User",
         back_populates="products"
     )
+    image_url = Column(
+        String,
+        nullable=True
+    )

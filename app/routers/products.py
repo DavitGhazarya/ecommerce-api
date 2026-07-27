@@ -5,7 +5,7 @@ from fastapi import (
 )
 
 from sqlalchemy.orm import Session
-
+from fastapi import status
 
 from app.database import get_db
 
@@ -25,6 +25,9 @@ from app.services.product_service import (
 from app.auth.dependencies import get_current_user
 
 from app.schemas.product import ProductListResponse
+from fastapi import UploadFile, File
+from app.services.image_service import upload_image
+
 
 router = APIRouter(
     prefix="/products",
@@ -37,7 +40,8 @@ from app.services.product_service import (
 )
 @router.post(
     "/",
-    response_model=ProductResponse
+    response_model=ProductResponse,
+    status_code=status.HTTP_201_CREATED
 )
 def create(
     data: ProductCreate,
@@ -188,4 +192,42 @@ def delete(
 
     return {
         "message": "Product deleted"
+    }
+
+@router.post("/{id}/image")
+def upload_product_image(
+    id: int,
+    file: UploadFile = File(...),
+    db: Session = Depends(get_db),
+    user = Depends(get_current_user)
+):
+
+    product = get_product(db, id)
+
+    if not product:
+        raise HTTPException(
+            404,
+            "Product not found"
+        )
+
+    if product.seller_id != user.id:
+        raise HTTPException(
+            403,
+            "Not allowed"
+        )
+
+
+    image_url = upload_image(
+        file.file
+    )
+
+
+    product.image_url = image_url
+
+    db.commit()
+    db.refresh(product)
+
+
+    return {
+        "image_url": product.image_url
     }
