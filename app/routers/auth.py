@@ -268,7 +268,7 @@ def reset_password(
         )
 
 
-    user.password_hash = hash_password(
+    user.hashed_password = hash_password(
         data.new_password
     )
 

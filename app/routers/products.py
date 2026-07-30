@@ -100,6 +100,35 @@ def products(
         "page": page,
         "limit": limit
     }
+
+@router.get(
+    "/my",
+    response_model=list[ProductResponse]
+)
+def my_products(
+    db: Session = Depends(get_db),
+    user = Depends(get_current_user)
+):
+
+    if user.role.value not in [
+        "seller",
+        "admin"
+    ]:
+        raise HTTPException(
+            status_code=403,
+            detail="Not allowed"
+        )
+
+
+    from app.models.product import Product
+
+
+    products = db.query(Product).filter(
+        Product.seller_id == user.id
+    ).all()
+
+
+    return products
 @router.get(
     "/{id}",
     response_model=ProductResponse

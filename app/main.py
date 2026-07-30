@@ -4,6 +4,7 @@ from app.config import settings
 from app.routers import auth
 from app.routers import products
 from app.routers import cart
+from fastapi.staticfiles import StaticFiles
 
 
 from app.routers import orders
@@ -28,13 +29,36 @@ app.include_router(
 app.add_middleware(
     CORSMiddleware,
     allow_origins=[
-        "http://localhost:3000"
+        "http://localhost:3000",
+        "http://localhost:8000"
     ],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
 app.middleware("http")(log_requests)
+from pathlib import Path
+from fastapi.staticfiles import StaticFiles
+from fastapi.responses import FileResponse
+
+
+BASE_DIR = Path(__file__).resolve().parent.parent
+
+FRONTEND_DIR = BASE_DIR / "frontend"
+
+
+app.mount(
+    "/app",
+    StaticFiles(
+        directory=FRONTEND_DIR,
+        html=True
+    ),
+    name="frontend"
+)
+
+
 @app.get("/")
 def root():
-    return {"message": f"{settings.PROJECT_NAME} is running"}
+    return FileResponse(
+        FRONTEND_DIR / "index.html"
+    )

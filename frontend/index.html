@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Market API</title>
+
+    <link rel="stylesheet" href="/app/css/style.css">
+</head>
+
+
+<body>
+
+
+<header>
+
+    <h2>
+        Market API
+    </h2>
+
+
+    <nav>
+
+    <button data-view="catalog">
+        Каталог
+    </button>
+
+    <button data-view="cart">
+        Корзина
+    </button>
+
+    <button data-view="orders">
+        Заказы
+    </button>
+
+    <button
+    data-view="seller"
+    id="sellerTab"
+    style="display:none">
+
+        Товары
+
+    </button>
+
+</nav>
+
+
+    <div id="userBox">
+        Гость
+    </div>
+
+
+</header>
+
+
+
+
+<main>
+
+
+<!-- AUTH -->
+
+<section
+id="view-auth"
+class="view active">
+
+
+<h2>
+Авторизация
+</h2>
+
+
+<div id="authMsg"></div>
+
+
+
+<form id="loginForm"
+class="card">
+
+
+<h3>
+Вход
+</h3>
+
+
+<input
+name="username"
+placeholder="Username">
+
+
+<input
+name="password"
+type="password"
+placeholder="Password">
+
+
+<button>
+Войти
+</button>
+
+
+</form>
+
+
+
+<button id="switchAuth">
+Регистрация
+</button>
+
+
+
+
+<form id="registerForm"
+class="card"
+style="display:none">
+
+
+<h3>
+Регистрация
+</h3>
+
+
+<input
+name="username"
+placeholder="Username">
+
+
+<input
+name="email"
+placeholder="Email">
+
+
+<input
+name="password"
+type="password"
+placeholder="Password">
+
+
+
+<select name="role">
+
+<option value="user">
+Покупатель
+</option>
+
+
+<option value="seller">
+Продавец
+</option>
+
+
+</select>
+
+
+
+<button>
+Создать
+</button>
+
+
+</form>
+
+
+</section>
+
+
+
+
+
+<!-- PRODUCTS -->
+
+
+<section
+id="view-catalog"
+class="view">
+
+
+<h2>
+Каталог
+</h2>
+<div class="toolbar">
+
+    <input
+    id="searchInput"
+    placeholder="Поиск товара">
+
+
+    <select id="sortSelect">
+
+        <option value="">
+            Без сортировки
+        </option>
+
+
+        <option value="price_asc">
+            Цена ↑
+        </option>
+
+
+        <option value="price_desc">
+            Цена ↓
+        </option>
+
+    </select>
+
+
+    <button id="searchBtn">
+        Поиск
+    </button>
+
+</div>
+
+<div id="catalogMsg"></div>
+
+
+<div id="productGrid"
+class="grid">
+
+</div>
+
+<div class="pager">
+
+    <button id="prevPage">
+        Назад
+    </button>
+
+
+    <span id="pageLabel">
+        1
+    </span>
+
+
+    <button id="nextPage">
+        Вперёд
+    </button>
+
+</div>
+</section>
+
+
+
+
+
+<!-- CART -->
+
+
+<section
+id="view-cart"
+class="view">
+
+
+<h2>
+Корзина
+</h2>
+
+
+<div id="cartBox">
+
+</div>
+
+
+</section>
+
+
+
+
+
+
+<!-- ORDERS -->
+
+
+<section
+id="view-orders"
+class="view">
+
+
+<h2>
+Заказы
+</h2>
+
+
+<div id="ordersBox">
+
+</div>
+
+
+</section>
+
+
+
+
+
+
+<!-- SELLER -->
+
+
+<section
+id="view-seller"
+class="view">
+
+
+<h2>
+Добавить товар
+</h2>
+
+
+
+<div class="card">
+
+
+<input
+id="sellerName"
+placeholder="Название">
+
+
+<textarea
+id="sellerDescription"
+placeholder="Описание">
+</textarea>
+
+
+
+<input
+id="sellerPrice"
+type="number"
+placeholder="Цена">
+
+
+
+<input id="sellerStock" type="number" placeholder="Количество">
+
+<input
+id="sellerImage"
+type="file"
+accept="image/*">
+
+<button
+id="createProductBtn">
+
+Добавить товар
+
+</button>
+
+
+
+</div>
+
+
+
+<div id="sellerMsg">
+
+</div>
+<h2>
+Мои товары
+</h2>
+
+
+<div
+id="sellerProducts"
+class="grid">
+
+</div>
+
+</section>
+
+
+
+</main>
+
+
+
+<script src="/app/js/app.js"></script>
+
+<div id="toastContainer"></div>
+</body>
+
+</html>

@@ -1,0 +1,733 @@
+<!--<!DOCTYPE html>-->
+<!--<html lang="ru">-->
+<!--<head>-->
+<!--<meta charset="UTF-8">-->
+<!--<meta name="viewport" content="width=device-width, initial-scale=1.0">-->
+<!--<title>Маркет — витрина</title>-->
+<!--<link rel="preconnect" href="https://fonts.googleapis.com">-->
+<!--<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">-->
+<!--<style>-->
+<!--  :root{-->
+<!--    &#45;&#45;ink:#1F3A2E;-->
+<!--    &#45;&#45;ink-soft:#3C5C4C;-->
+<!--    &#45;&#45;paper:#F3EFE4;-->
+<!--    &#45;&#45;paper-2:#EAE3D3;-->
+<!--    &#45;&#45;mustard:#D9A441;-->
+<!--    &#45;&#45;rust:#B5482F;-->
+<!--    &#45;&#45;line:#c9c0a8;-->
+<!--    &#45;&#45;shadow: 0 1px 0 rgba(31,58,46,.08);-->
+<!--    &#45;&#45;radius: 2px;-->
+<!--  }-->
+<!--  *{box-sizing:border-box;}-->
+<!--  body{-->
+<!--    margin:0;-->
+<!--    background:var(&#45;&#45;paper);-->
+<!--    color:var(&#45;&#45;ink);-->
+<!--    font-family:'IBM Plex Mono', monospace;-->
+<!--    font-size:14px;-->
+<!--    line-height:1.5;-->
+<!--  }-->
+<!--  h1,h2,h3{-->
+<!--    font-family:'Fraunces', serif;-->
+<!--    font-weight:700;-->
+<!--    margin:0 0 .4em 0;-->
+<!--    letter-spacing:-.01em;-->
+<!--  }-->
+<!--  a{color:inherit;}-->
+
+<!--  header.top{-->
+<!--    position:sticky; top:0; z-index:10;-->
+<!--    background:var(&#45;&#45;paper);-->
+<!--    border-bottom:2px solid var(&#45;&#45;ink);-->
+<!--    display:flex; align-items:center; justify-content:space-between;-->
+<!--    padding:14px 24px;-->
+<!--    flex-wrap:wrap; gap:10px;-->
+<!--  }-->
+<!--  header.top .brand{-->
+<!--    font-family:'Fraunces', serif;-->
+<!--    font-size:22px; font-weight:700;-->
+<!--    display:flex; align-items:baseline; gap:8px;-->
+<!--  }-->
+<!--  header.top .brand small{-->
+<!--    font-family:'IBM Plex Mono', monospace;-->
+<!--    font-size:11px; font-weight:400; color:var(&#45;&#45;ink-soft);-->
+<!--    letter-spacing:.08em; text-transform:uppercase;-->
+<!--  }-->
+<!--  nav.tabs{ display:flex; gap:4px; flex-wrap:wrap; }-->
+<!--  nav.tabs button{-->
+<!--    background:none; border:none; cursor:pointer;-->
+<!--    font-family:'IBM Plex Mono', monospace;-->
+<!--    font-size:12px; letter-spacing:.04em; text-transform:uppercase;-->
+<!--    padding:8px 12px; color:var(&#45;&#45;ink-soft);-->
+<!--    border-bottom:2px solid transparent;-->
+<!--  }-->
+<!--  nav.tabs button.active{ color:var(&#45;&#45;ink); border-bottom-color:var(&#45;&#45;rust); font-weight:600; }-->
+<!--  nav.tabs button:hover{ color:var(&#45;&#45;ink); }-->
+
+<!--  .who{ font-size:12px; color:var(&#45;&#45;ink-soft); display:flex; align-items:center; gap:10px; }-->
+<!--  .who button{-->
+<!--    background:var(&#45;&#45;ink); color:var(&#45;&#45;paper); border:none;-->
+<!--    padding:7px 12px; font-family:'IBM Plex Mono',monospace; font-size:11px;-->
+<!--    letter-spacing:.05em; text-transform:uppercase; cursor:pointer; border-radius:var(&#45;&#45;radius);-->
+<!--  }-->
+
+<!--  main{ max-width:960px; margin:0 auto; padding:28px 24px 80px; }-->
+<!--  .view{ display:none; }-->
+<!--  .view.active{ display:block; }-->
+
+<!--  .lede{ color:var(&#45;&#45;ink-soft); margin-bottom:22px; max-width:60ch; }-->
+
+<!--  /* auth forms */-->
+<!--  .card{-->
+<!--    background:var(&#45;&#45;paper-2);-->
+<!--    border:1px solid var(&#45;&#45;line);-->
+<!--    border-radius:var(&#45;&#45;radius);-->
+<!--    padding:22px;-->
+<!--    max-width:420px;-->
+<!--  }-->
+<!--  .field{ margin-bottom:14px; display:flex; flex-direction:column; gap:5px; }-->
+<!--  label{ font-size:11px; text-transform:uppercase; letter-spacing:.06em; color:var(&#45;&#45;ink-soft); }-->
+<!--  input, select, textarea{-->
+<!--    font-family:'IBM Plex Mono', monospace;-->
+<!--    font-size:14px;-->
+<!--    padding:9px 10px;-->
+<!--    border:1px solid var(&#45;&#45;line);-->
+<!--    background:var(&#45;&#45;paper);-->
+<!--    color:var(&#45;&#45;ink);-->
+<!--    border-radius:var(&#45;&#45;radius);-->
+<!--  }-->
+<!--  input:focus, select:focus, textarea:focus{ outline:2px solid var(&#45;&#45;mustard); outline-offset:1px; }-->
+<!--  .btn{-->
+<!--    background:var(&#45;&#45;ink); color:var(&#45;&#45;paper); border:none;-->
+<!--    padding:10px 16px; font-family:'IBM Plex Mono',monospace; font-size:12px;-->
+<!--    letter-spacing:.05em; text-transform:uppercase; cursor:pointer; border-radius:var(&#45;&#45;radius);-->
+<!--  }-->
+<!--  .btn:hover{ background:var(&#45;&#45;ink-soft); }-->
+<!--  .btn.rust{ background:var(&#45;&#45;rust); }-->
+<!--  .btn.ghost{ background:none; color:var(&#45;&#45;ink); border:1px solid var(&#45;&#45;ink); }-->
+<!--  .switch-link{ font-size:12px; margin-top:12px; color:var(&#45;&#45;ink-soft); }-->
+<!--  .switch-link a{ color:var(&#45;&#45;rust); cursor:pointer; text-decoration:underline; }-->
+
+<!--  .msg{ padding:10px 12px; border-radius:var(&#45;&#45;radius); font-size:13px; margin-bottom:14px; display:none; }-->
+<!--  .msg.error{ background:#f3d9d2; color:var(&#45;&#45;rust); display:block; }-->
+<!--  .msg.ok{ background:#dfe9d9; color:var(&#45;&#45;ink); display:block; }-->
+
+<!--  /* catalog */-->
+<!--  .toolbar{ display:flex; gap:8px; flex-wrap:wrap; margin-bottom:18px; }-->
+<!--  .toolbar input{ flex:1; min-width:160px; }-->
+
+<!--  .grid{ display:grid; grid-template-columns:repeat(auto-fill, minmax(200px,1fr)); gap:16px; }-->
+<!--  .product{-->
+<!--    border:1px solid var(&#45;&#45;line); background:var(&#45;&#45;paper-2);-->
+<!--    border-radius:var(&#45;&#45;radius); padding:14px; display:flex; flex-direction:column; gap:8px;-->
+<!--  }-->
+<!--  .product .name{ font-family:'Fraunces', serif; font-weight:700; font-size:16px; }-->
+<!--  .product .desc{ color:var(&#45;&#45;ink-soft); font-size:12px; min-height:2.4em; }-->
+<!--  .product .price{-->
+<!--    font-size:18px; font-weight:600; color:var(&#45;&#45;rust);-->
+<!--    border-top:1px dashed var(&#45;&#45;line); padding-top:8px; margin-top:auto;-->
+<!--    display:flex; justify-content:space-between; align-items:center;-->
+<!--  }-->
+<!--  .stock{ font-size:11px; color:var(&#45;&#45;ink-soft); }-->
+<!--  .pager{ display:flex; gap:10px; align-items:center; justify-content:center; margin-top:22px; }-->
+
+<!--  /* cart / orders as receipt */-->
+<!--  .receipt{-->
+<!--    border:1px solid var(&#45;&#45;ink); background:var(&#45;&#45;paper-2);-->
+<!--    max-width:480px; padding:0;-->
+<!--  }-->
+<!--  .receipt-row{-->
+<!--    display:flex; justify-content:space-between; gap:10px;-->
+<!--    padding:10px 16px; border-bottom:1px dashed var(&#45;&#45;line); font-size:13px;-->
+<!--  }-->
+<!--  .receipt-row:last-child{ border-bottom:none; }-->
+<!--  .receipt-head{ background:var(&#45;&#45;ink); color:var(&#45;&#45;paper); padding:12px 16px; font-family:'Fraunces',serif; font-weight:700; }-->
+<!--  .receipt-total{ font-weight:700; border-top:2px solid var(&#45;&#45;ink) !important; }-->
+<!--  .rm{ background:none; border:none; color:var(&#45;&#45;rust); cursor:pointer; font-size:11px; text-decoration:underline; }-->
+
+<!--  .order-card{ border:1px solid var(&#45;&#45;line); background:var(&#45;&#45;paper-2); padding:14px 16px; margin-bottom:10px; border-radius:var(&#45;&#45;radius); }-->
+<!--  .order-card .status{ display:inline-block; padding:2px 8px; background:var(&#45;&#45;mustard); color:var(&#45;&#45;ink); font-size:11px; text-transform:uppercase; border-radius:var(&#45;&#45;radius); }-->
+
+<!--  .empty{ color:var(&#45;&#45;ink-soft); font-style:italic; padding:20px 0; }-->
+<!--  footer.config{ max-width:960px; margin:0 auto; padding:0 24px 40px; font-size:11px; color:var(&#45;&#45;ink-soft); }-->
+<!--</style>-->
+<!--</head>-->
+<!--<body>-->
+
+<!--<header class="top">-->
+<!--  <div class="brand">Маркет <small>витрина api</small></div>-->
+<!--  <nav class="tabs">-->
+<!--  <button data-view="catalog" class="active">Каталог</button>-->
+<!--  <button data-view="cart">Корзина</button>-->
+<!--  <button data-view="orders">Заказы</button>-->
+<!--  <button data-view="seller" id="sellerTab" style="display:none">-->
+<!--    Товары-->
+<!--  </button>-->
+<!--</nav>-->
+<!--  <div class="who" id="whoBox">-->
+<!--    <span id="whoLabel">гость</span>-->
+<!--  </div>-->
+<!--</header>-->
+
+<!--<main>-->
+
+<!--  &lt;!&ndash; AUTH &ndash;&gt;-->
+<!--  <section class="view active" id="view-auth">-->
+<!--    <h2 id="authTitle">Вход</h2>-->
+<!--    <p class="lede">Войдите, чтобы добавлять товары в корзину и оформлять заказы.</p>-->
+<!--    <div class="msg" id="authMsg"></div>-->
+
+<!--    <form class="card" id="loginForm">-->
+<!--      <div class="field"><label>Логин</label><input name="username" required></div>-->
+<!--      <div class="field"><label>Пароль</label><input name="password" type="password" required></div>-->
+<!--      <button class="btn" type="submit">Войти</button>-->
+<!--      <div class="switch-link">Нет аккаунта? <a id="toRegister">Зарегистрироваться</a></div>-->
+<!--    </form>-->
+
+<!--   <form class="card" id="registerForm" style="display:none">-->
+
+<!--  <div class="field">-->
+<!--    <label>Логин</label>-->
+<!--    <input name="username" required minlength="3">-->
+<!--  </div>-->
+
+<!--  <div class="field">-->
+<!--    <label>Email</label>-->
+<!--    <input name="email" type="email" required>-->
+<!--  </div>-->
+
+<!--  <div class="field">-->
+<!--    <label>Пароль</label>-->
+<!--    <input name="password" type="password" required minlength="8">-->
+<!--  </div>-->
+
+<!--  <div class="field">-->
+<!--    <label>Тип аккаунта</label>-->
+<!--    <select name="role">-->
+<!--      <option value="user">Покупатель</option>-->
+<!--      <option value="seller">Продавец</option>-->
+<!--    </select>-->
+<!--  </div>-->
+
+<!--  <button class="btn" type="submit">-->
+<!--    Создать аккаунт-->
+<!--  </button>-->
+
+<!--  <div class="switch-link">-->
+<!--    Уже есть аккаунт?-->
+<!--    <a id="toLogin">Войти</a>-->
+<!--  </div>-->
+
+<!--</form>-->
+<!--  </section>-->
+
+<!--  &lt;!&ndash; CATALOG &ndash;&gt;-->
+<!--  <section class="view" id="view-catalog">-->
+<!--    <h2>Каталог</h2>-->
+<!--    <div class="toolbar">-->
+<!--      <input id="searchInput" placeholder="Поиск по названию…">-->
+<!--      <select id="sortSelect">-->
+<!--        <option value="">Сортировка</option>-->
+<!--        <option value="price_asc">Цена ↑</option>-->
+<!--        <option value="price_desc">Цена ↓</option>-->
+<!--      </select>-->
+<!--      <button class="btn ghost" id="searchBtn">Найти</button>-->
+<!--    </div>-->
+<!--    <div class="msg" id="catalogMsg"></div>-->
+<!--    <div class="grid" id="productGrid"></div>-->
+<!--    <div class="pager">-->
+<!--      <button class="btn ghost" id="prevPage">← Назад</button>-->
+<!--      <span id="pageLabel">стр. 1</span>-->
+<!--      <button class="btn ghost" id="nextPage">Вперёд →</button>-->
+<!--    </div>-->
+<!--  </section>-->
+
+<!--  &lt;!&ndash; CART &ndash;&gt;-->
+<!--  <section class="view" id="view-cart">-->
+<!--    <h2>Корзина</h2>-->
+<!--    <div class="msg" id="cartMsg"></div>-->
+<!--    <div id="cartBox"></div>-->
+<!--  </section>-->
+
+<!--  &lt;!&ndash; ORDERS &ndash;&gt;-->
+<!--  <section class="view" id="view-orders">-->
+<!--    <h2>Мои заказы</h2>-->
+<!--    <div class="msg" id="ordersMsg"></div>-->
+<!--    <div id="ordersBox"></div>-->
+<!--  </section>-->
+<!--&lt;!&ndash; SELLER &ndash;&gt;-->
+<!--<section class="view" id="view-seller">-->
+
+<!--  <h2>Управление товарами</h2>-->
+
+<!--  <div class="card">-->
+
+<!--    <div class="field">-->
+<!--      <label>Название</label>-->
+<!--      <input id="sellerName" placeholder="Название товара">-->
+<!--    </div>-->
+
+
+<!--    <div class="field">-->
+<!--      <label>Описание</label>-->
+<!--      <textarea id="sellerDescription" placeholder="Описание товара"></textarea>-->
+<!--    </div>-->
+
+
+<!--    <div class="field">-->
+<!--      <label>Цена</label>-->
+<!--      <input id="sellerPrice" type="number" placeholder="Цена">-->
+<!--    </div>-->
+
+
+<!--    <div class="field">-->
+<!--      <label>Количество</label>-->
+<!--      <input id="sellerStock" type="number" placeholder="Количество">-->
+<!--    </div>-->
+
+
+<!--    <button class="btn" onclick="createProduct()">-->
+<!--      Добавить товар-->
+<!--    </button>-->
+
+<!--  </div>-->
+
+
+<!--  <div class="msg" id="sellerMsg"></div>-->
+
+
+<!--</section>-->
+<!--</main>-->
+
+<!--<footer class="config">-->
+<!--  API: <span id="apiBaseLabel"></span> — токен хранится только в памяти вкладки (обновление страницы разлогинит).-->
+<!--</footer>-->
+
+<!--<script>-->
+<!--(function(){-->
+<!--  "use strict";-->
+
+<!--  // ── Конфиг ───────────────────────────────────────────────-->
+<!--  // Если фронтенд отдаётся тем же FastAPI-приложением (через StaticFiles),-->
+<!--  // оставь пустую строку — запросы пойдут на тот же origin.-->
+<!--  // Если открываешь этот файл отдельно (напр. Live Server на :5500),-->
+<!--  // укажи адрес бэкенда явно, например: 'http://localhost:8000'-->
+<!--  const API_BASE = 'http://localhost:8000';-->
+
+<!--  document.getElementById('apiBaseLabel').textContent = API_BASE || window.location.origin;-->
+
+<!--  // ── Состояние (только в памяти, без localStorage) ───────-->
+<!--  let state = {-->
+<!--    accessToken: null,-->
+<!--    user: null,-->
+<!--    page: 1,-->
+<!--    limit: 8,-->
+<!--  };-->
+
+<!--  // ── Вспомогательные ──────────────────────────────────────-->
+<!--  async function api(path, opts = {}) {-->
+<!--    const headers = opts.headers || {};-->
+<!--    if (state.accessToken) headers['Authorization'] = 'Bearer ' + state.accessToken;-->
+<!--    const res = await fetch(API_BASE + path, { ...opts, headers });-->
+<!--    let data = null;-->
+<!--    try { data = await res.json(); } catch (e) { /* no body */ }-->
+<!--    if (!res.ok) {-->
+<!--      const detail = (data && data.detail) ? data.detail : res.statusText;-->
+<!--      throw new Error(typeof detail === 'string' ? detail : JSON.stringify(detail));-->
+<!--    }-->
+<!--    return data;-->
+<!--  }-->
+
+<!--  function showMsg(id, text, ok=false) {-->
+<!--    const el = document.getElementById(id);-->
+<!--    el.textContent = text;-->
+<!--    el.className = 'msg ' + (ok ? 'ok' : 'error');-->
+<!--  }-->
+<!--  function clearMsg(id) {-->
+<!--    const el = document.getElementById(id);-->
+<!--    el.textContent = ''; el.className = 'msg';-->
+<!--  }-->
+
+<!--  // ── Навигация ────────────────────────────────────────────-->
+<!--  const tabs = document.querySelectorAll('nav.tabs button');-->
+<!--  tabs.forEach(btn => btn.addEventListener('click', () => showView(btn.dataset.view)));-->
+
+<!--  function showView(name) {-->
+<!--    if (name !== 'catalog' && !state.accessToken) {-->
+<!--      alert('Сначала войдите в аккаунт.');-->
+<!--      name = 'auth';-->
+<!--    }-->
+<!--    document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));-->
+<!--    document.getElementById('view-' + name).classList.add('active');-->
+<!--    tabs.forEach(b => b.classList.toggle('active', b.dataset.view === name));-->
+<!--    if (name === 'cart') loadCart();-->
+<!--    if (name === 'orders') loadOrders();-->
+<!--  }-->
+
+<!--  // ── Auth: переключение форм ──────────────────────────────-->
+<!--  document.getElementById('toRegister').onclick = () => {-->
+<!--    document.getElementById('authTitle').textContent = 'Регистрация';-->
+<!--    document.getElementById('loginForm').style.display = 'none';-->
+<!--    document.getElementById('registerForm').style.display = 'block';-->
+<!--    clearMsg('authMsg');-->
+<!--  };-->
+<!--  document.getElementById('toLogin').onclick = () => {-->
+<!--    document.getElementById('authTitle').textContent = 'Вход';-->
+<!--    document.getElementById('registerForm').style.display = 'none';-->
+<!--    document.getElementById('loginForm').style.display = 'block';-->
+<!--    clearMsg('authMsg');-->
+<!--  };-->
+
+<!--  document.getElementById('registerForm').addEventListener('submit', async (e) => {-->
+<!--  e.preventDefault();-->
+
+<!--  const f = new FormData(e.target);-->
+
+<!--  const role = f.get('role');-->
+
+<!--  const endpoint =-->
+<!--    role === "seller"-->
+<!--      ? "/auth/register-seller"-->
+<!--      : "/auth/register";-->
+
+<!--  try {-->
+
+<!--    await api(endpoint, {-->
+<!--      method: 'POST',-->
+<!--      headers: {-->
+<!--        'Content-Type': 'application/json'-->
+<!--      },-->
+
+<!--      body: JSON.stringify({-->
+<!--        username: f.get('username'),-->
+<!--        email: f.get('email'),-->
+<!--        password: f.get('password'),-->
+<!--      }),-->
+<!--    });-->
+
+
+<!--    showMsg(-->
+<!--      'authMsg',-->
+<!--      role === "seller"-->
+<!--        ? 'Продавец создан. Теперь войдите.'-->
+<!--        : 'Аккаунт создан. Теперь войдите.',-->
+<!--      true-->
+<!--    );-->
+
+
+<!--    document.getElementById('toLogin').click();-->
+
+
+<!--  } catch (err) {-->
+
+<!--    showMsg(-->
+<!--      'authMsg',-->
+<!--      'Ошибка регистрации: ' + err.message-->
+<!--    );-->
+
+<!--  }-->
+<!--});-->
+
+<!--  document.getElementById('loginForm').addEventListener('submit', async (e) => {-->
+<!--    e.preventDefault();-->
+<!--    const f = new FormData(e.target);-->
+<!--    // /auth/login использует OAuth2PasswordRequestForm → нужен x-www-form-urlencoded-->
+<!--    const body = new URLSearchParams();-->
+<!--    body.set('username', f.get('username'));-->
+<!--    body.set('password', f.get('password'));-->
+<!--    try {-->
+<!--      const data = await api('/auth/login', {-->
+<!--        method: 'POST',-->
+<!--        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },-->
+<!--        body: body.toString(),-->
+<!--      });-->
+<!--      state.accessToken = data.access_token;-->
+<!--      await loadMe();-->
+<!--      clearMsg('authMsg');-->
+<!--      showView('catalog');-->
+<!--    } catch (err) {-->
+<!--      showMsg('authMsg', 'Ошибка входа: ' + err.message);-->
+<!--    }-->
+<!--  });-->
+
+<!--async function loadMe() {-->
+<!--  const me = await api('/auth/me');-->
+
+<!--  state.user = me;-->
+
+<!--  document.getElementById('whoLabel').textContent =-->
+<!--    me.username + ' (' + me.role + ')';-->
+
+
+<!--  const box = document.getElementById('whoBox');-->
+
+
+<!--  if (!document.getElementById('logoutBtn')) {-->
+<!--    const b = document.createElement('button');-->
+
+<!--    b.id = 'logoutBtn';-->
+<!--    b.textContent = 'Выйти';-->
+<!--    b.onclick = logout;-->
+
+<!--    box.appendChild(b);-->
+<!--  }-->
+
+
+<!--  // Показываем seller меню только продавцу-->
+<!--  const sellerTab = document.getElementById('sellerTab');-->
+
+<!--  if (me.role === "seller" || me.role === "admin") {-->
+<!--    sellerTab.style.display = "block";-->
+<!--  } else {-->
+<!--    sellerTab.style.display = "none";-->
+<!--  }-->
+<!--}-->
+
+<!--  function logout() {-->
+<!--    state.accessToken = null;-->
+<!--    state.user = null;-->
+<!--    document.getElementById('whoLabel').textContent = 'гость';-->
+<!--    const b = document.getElementById('logoutBtn');-->
+<!--    if (b) b.remove();-->
+<!--    showView('auth');-->
+<!--  }-->
+
+<!--  // ── Каталог ──────────────────────────────────────────────-->
+<!--  async function loadProducts() {-->
+<!--    clearMsg('catalogMsg');-->
+<!--    const q = document.getElementById('searchInput').value.trim();-->
+<!--    const sort = document.getElementById('sortSelect').value;-->
+<!--    const params = new URLSearchParams({ page: state.page, limit: state.limit });-->
+<!--    if (q) params.set('search', q);-->
+<!--    if (sort) params.set('sort', sort);-->
+<!--    try {-->
+<!--      const data = await api('/products/?' + params.toString());-->
+<!--      renderProducts(data.items);-->
+<!--      document.getElementById('pageLabel').textContent =-->
+<!--        'стр. ' + data.page + ' из ' + Math.max(1, Math.ceil(data.total / data.limit));-->
+<!--    } catch (err) {-->
+<!--      showMsg('catalogMsg', 'Не удалось загрузить товары: ' + err.message);-->
+<!--    }-->
+<!--  }-->
+
+<!--  function renderProducts(items) {-->
+<!--    const grid = document.getElementById('productGrid');-->
+<!--    grid.innerHTML = '';-->
+<!--    if (!items.length) {-->
+<!--      grid.innerHTML = '<div class="empty">Ничего не найдено.</div>';-->
+<!--      return;-->
+<!--    }-->
+<!--    items.forEach(p => {-->
+<!--      const div = document.createElement('div');-->
+<!--      div.className = 'product';-->
+<!--      div.innerHTML = `-->
+<!--        <div class="name">${escapeHtml(p.name)}</div>-->
+<!--        <div class="desc">${escapeHtml(p.description || '')}</div>-->
+<!--        <div class="stock">В наличии: ${p.stock}</div>-->
+<!--        <div class="price">-->
+<!--          <span>${p.price.toFixed(2)} ₽</span>-->
+<!--          <button class="btn" data-id="${p.id}">В корзину</button>-->
+<!--        </div>-->
+<!--      `;-->
+<!--      div.querySelector('button').addEventListener('click', () => addToCart(p.id));-->
+<!--      grid.appendChild(div);-->
+<!--    });-->
+<!--  }-->
+
+<!--  document.getElementById('searchBtn').onclick = () => { state.page = 1; loadProducts(); };-->
+<!--  document.getElementById('searchInput').addEventListener('keydown', e => {-->
+<!--    if (e.key === 'Enter') { state.page = 1; loadProducts(); }-->
+<!--  });-->
+<!--  document.getElementById('sortSelect').onchange = () => { state.page = 1; loadProducts(); };-->
+<!--  document.getElementById('prevPage').onclick = () => { if (state.page > 1) { state.page&#45;&#45;; loadProducts(); } };-->
+<!--  document.getElementById('nextPage').onclick = () => { state.page++; loadProducts(); };-->
+
+<!--  async function addToCart(productId) {-->
+<!--    if (!state.accessToken) { alert('Сначала войдите в аккаунт.'); showView('auth'); return; }-->
+<!--    try {-->
+<!--      await api('/cart/items', {-->
+<!--        method: 'POST',-->
+<!--        headers: { 'Content-Type': 'application/json' },-->
+<!--        body: JSON.stringify({ product_id: productId, quantity: 1 }),-->
+<!--      });-->
+<!--      showMsg('catalogMsg', 'Добавлено в корзину.', true);-->
+<!--    } catch (err) {-->
+<!--      showMsg('catalogMsg', 'Не удалось добавить: ' + err.message);-->
+<!--    }-->
+<!--  }-->
+
+<!--  // ── Корзина ──────────────────────────────────────────────-->
+<!--  async function loadCart() {-->
+<!--    clearMsg('cartMsg');-->
+<!--    const box = document.getElementById('cartBox');-->
+<!--    box.innerHTML = 'Загрузка…';-->
+<!--    try {-->
+<!--      const cart = await api('/cart');-->
+<!--      if (!cart.items.length) {-->
+<!--        box.innerHTML = '<div class="empty">Корзина пуста.</div>';-->
+<!--        return;-->
+<!--      }-->
+<!--      let total = 0;-->
+<!--      const rows = cart.items.map(it => {-->
+<!--        total += it.product.price * it.quantity;-->
+<!--        return `<div class="receipt-row">-->
+<!--          <span>${escapeHtml(it.product.name)} × ${it.quantity}</span>-->
+<!--          <span>${(it.product.price * it.quantity).toFixed(2)} ₽-->
+<!--            <button class="rm" data-id="${it.id}">убрать</button>-->
+<!--          </span>-->
+<!--        </div>`;-->
+<!--      }).join('');-->
+<!--      box.innerHTML = `-->
+<!--        <div class="receipt">-->
+<!--          <div class="receipt-head">Корзина №${cart.id}</div>-->
+<!--          ${rows}-->
+<!--          <div class="receipt-row receipt-total"><span>Итого</span><span>${total.toFixed(2)} ₽</span></div>-->
+<!--        </div>-->
+<!--        <br>-->
+<!--        <button class="btn rust" id="checkoutBtn">Оформить заказ</button>-->
+<!--      `;-->
+<!--      box.querySelectorAll('.rm').forEach(b => b.addEventListener('click', () => removeFromCart(b.dataset.id)));-->
+<!--      document.getElementById('checkoutBtn').addEventListener('click', checkout);-->
+<!--    } catch (err) {-->
+<!--      showMsg('cartMsg', 'Не удалось загрузить корзину: ' + err.message);-->
+<!--    }-->
+<!--  }-->
+
+<!--  async function removeFromCart(itemId) {-->
+<!--    try {-->
+<!--      await api('/cart/items/' + itemId, { method: 'DELETE' });-->
+<!--      loadCart();-->
+<!--    } catch (err) {-->
+<!--      showMsg('cartMsg', 'Не удалось убрать товар: ' + err.message);-->
+<!--    }-->
+<!--  }-->
+
+<!--  async function checkout() {-->
+<!--    try {-->
+<!--      await api('/orders/', { method: 'POST' });-->
+<!--      showMsg('cartMsg', 'Заказ оформлен!', true);-->
+<!--      loadCart();-->
+<!--    } catch (err) {-->
+<!--      showMsg('cartMsg', 'Не удалось оформить заказ: ' + err.message);-->
+<!--    }-->
+<!--  }-->
+
+<!--  // ── Заказы ───────────────────────────────────────────────-->
+<!--  async function loadOrders() {-->
+<!--    clearMsg('ordersMsg');-->
+<!--    const box = document.getElementById('ordersBox');-->
+<!--    box.innerHTML = 'Загрузка…';-->
+<!--    try {-->
+<!--      const orders = await api('/orders/');-->
+<!--      if (!orders.length) {-->
+<!--        box.innerHTML = '<div class="empty">Заказов пока нет.</div>';-->
+<!--        return;-->
+<!--      }-->
+<!--      box.innerHTML = orders.map(o => `-->
+<!--        <div class="order-card">-->
+<!--          <strong>Заказ №${o.id}</strong>-->
+<!--          <span class="status">${escapeHtml(o.status)}</span>-->
+<!--          <div>${o.total_price.toFixed(2)} ₽</div>-->
+<!--        </div>-->
+<!--      `).join('');-->
+<!--    } catch (err) {-->
+<!--      showMsg('ordersMsg', 'Не удалось загрузить заказы: ' + err.message);-->
+<!--    }-->
+<!--  }-->
+
+<!--  function escapeHtml(s) {-->
+<!--    const d = document.createElement('div');-->
+<!--    d.textContent = s == null ? '' : String(s);-->
+<!--    return d.innerHTML;-->
+<!--  }-->
+
+<!--  // ── Старт ────────────────────────────────────────────────-->
+<!--    async function createProduct(){-->
+
+<!--    try{-->
+
+<!--        await api("/products/",{-->
+<!--            method:"POST",-->
+<!--            headers:{-->
+<!--                "Content-Type":"application/json"-->
+<!--            },-->
+<!--            body:JSON.stringify({-->
+
+<!--                name:-->
+<!--                document.getElementById("productName").value,-->
+
+<!--                description:-->
+<!--                document.getElementById("productDescription").value,-->
+
+<!--                price:-->
+<!--                Number(document.getElementById("productPrice").value),-->
+
+<!--                stock:-->
+<!--                Number(document.getElementById("productStock").value),-->
+
+<!--                image_url:-->
+<!--                document.getElementById("productImage").value-->
+
+<!--            })-->
+<!--        });-->
+
+
+<!--        alert("Товар добавлен");-->
+
+<!--    }-->
+<!--    catch(err){-->
+
+<!--        alert(-->
+<!--          "Ошибка: "+err.message-->
+<!--        );-->
+
+<!--    }-->
+<!--}-->
+<!--async function createProduct(){-->
+
+<!--    try{-->
+
+<!--        const data = {-->
+<!--            name: document.getElementById("sellerName").value,-->
+<!--            description: document.getElementById("sellerDescription").value,-->
+<!--            price: Number(-->
+<!--                document.getElementById("sellerPrice").value-->
+<!--            ),-->
+<!--            stock: Number(-->
+<!--                document.getElementById("sellerStock").value-->
+<!--            )-->
+<!--        };-->
+
+
+<!--        await api("/products/",{-->
+<!--            method:"POST",-->
+<!--            headers:{-->
+<!--                "Content-Type":"application/json"-->
+<!--            },-->
+<!--            body:JSON.stringify(data)-->
+<!--        });-->
+
+
+<!--        showMsg(-->
+<!--            "sellerMsg",-->
+<!--            "Товар создан",-->
+<!--            true-->
+<!--        );-->
+
+
+<!--    }catch(err){-->
+
+<!--        showMsg(-->
+<!--            "sellerMsg",-->
+<!--            "Ошибка: " + err.message-->
+<!--        );-->
+
+<!--    }-->
+
+<!--}-->
+<!--  loadProducts();-->
+<!--})();-->
+<!--</script>-->
+
+<!--</body>-->
+<!--</html>-->

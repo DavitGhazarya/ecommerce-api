@@ -65,22 +65,20 @@ def get_products(
     # Sorting
     if sort:
 
-        if sort == "price":
+        if sort == "price_asc":
             query = query.order_by(
                 Product.price.asc()
             )
 
-        elif sort == "-price":
+        elif sort == "price_desc":
             query = query.order_by(
                 Product.price.desc()
             )
-
 
         elif sort == "newest":
             query = query.order_by(
                 Product.created_at.desc()
             )
-
     total = query.count()
 
     products = (
