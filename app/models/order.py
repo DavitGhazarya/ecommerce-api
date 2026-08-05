@@ -1,7 +1,7 @@
 from sqlalchemy import (
     Column,
     Integer,
-    Float,
+    Numeric,
     ForeignKey,
     Enum
 )
@@ -37,7 +37,7 @@ class Order(Base):
 
 
     total_price = Column(
-        Float,
+        Numeric(10, 2),
         default=0
     )
 
@@ -78,5 +78,5 @@ class OrderItem(Base):
 
 
     price = Column(
-        Float
+        Numeric(10, 2)
     )

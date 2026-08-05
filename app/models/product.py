@@ -3,7 +3,7 @@ from sqlalchemy import (
     Integer,
     String,
     Text,
-    Float,
+    Numeric,
     Boolean,
     DateTime,
     ForeignKey,
@@ -41,7 +41,7 @@ class Product(Base):
 
 
     price = Column(
-        Float,
+        Numeric(10, 2),
         nullable=False
     )
 

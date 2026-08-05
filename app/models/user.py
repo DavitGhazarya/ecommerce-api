@@ -93,13 +93,17 @@ class User(Base):
         server_default=func.now(),
         nullable=False
     )
+    updated_at = Column(
+        DateTime(timezone=True),
+        onupdate=func.now()
+    )
     reset_password_token = Column(
-        String,
+        String(255),
         nullable=True
     )
 
     reset_password_token_expire = Column(
-        DateTime,
+        DateTime(timezone=True),
         nullable=True
     )
 

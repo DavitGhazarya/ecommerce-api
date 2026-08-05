@@ -1,14 +1,16 @@
-
-
 from pydantic_settings import BaseSettings, SettingsConfigDict
+from pathlib import Path
+
+
+BASE_DIR = Path(__file__).resolve().parent.parent
+
+
 
 class Settings(BaseSettings):
 
-    DATABASE_URL: str = (
-        "postgresql://postgres:password@localhost:5432/ecommerce_db"
-    )
+    DATABASE_URL: str
 
-    SECRET_KEY: str = "change-this-to-a-random-secret-string"
+    SECRET_KEY: str
 
     ALGORITHM: str = "HS256"
 
@@ -19,23 +21,20 @@ class Settings(BaseSettings):
     PROJECT_NAME: str = "E-commerce API"
 
 
-    SMTP_HOST: str | None = None
+    MAIL_USERNAME: str
+    MAIL_PASSWORD: str
+    MAIL_FROM: str
 
-    SMTP_PORT: int | None = None
-
-    EMAIL_USER: str | None = None
-
-    EMAIL_PASSWORD: str | None = None
-
-    CLOUDINARY_CLOUD_NAME: str | None = None
-    CLOUDINARY_API_KEY: str | None = None
-    CLOUDINARY_API_SECRET: str | None = None
+    MAIL_SERVER: str = "smtp.gmail.com"
+    MAIL_PORT: int = 587
 
     model_config = SettingsConfigDict(
-        env_file=".env",
+        env_file=BASE_DIR / ".env",
+        env_file_encoding="utf-8",
         extra="ignore"
     )
-
-
-
+    CLOUDINARY_CLOUD_NAME: str
+    CLOUDINARY_API_KEY: str
+    CLOUDINARY_API_SECRET: str
+    BASE_URL: str = "http://localhost:8000"
 settings = Settings()

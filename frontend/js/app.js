@@ -199,11 +199,6 @@ document
                 "password",
                 form.get("password")
             );
-console.log(
-    "LOGIN:",
-    form.get("username"),
-    form.get("password")
-);
 
             try {
 
@@ -311,7 +306,7 @@ document
 
                 showMessage(
                     "authMsg",
-                    "Создано. Теперь войдите",
+                    "Аккаунт создан. Проверьте Gmail и подтвердите email.",
                     true
                 );
 
@@ -591,7 +586,7 @@ async function createProduct() {
 
         const file =
             document.getElementById("sellerImage").files[0];
-        console.log(file)
+
 
         if (file) {
 

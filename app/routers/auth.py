@@ -32,7 +32,7 @@ from app.services.token_service import create_user_refresh_token
 
 from app.core.email_service import send_reset_email
 import secrets
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta,timezone
 
 router = APIRouter(
     prefix="/auth",
@@ -75,7 +75,11 @@ def register_user(
         hashed_password=hash_password(payload.password),
         role=UserRole.USER,
         is_verified=False,
-        verification_token=verification_token
+        verification_token=verification_token,
+        verification_token_expire=(
+                datetime.utcnow()
+                + timedelta(hours=24)
+        )
     )
 
     db.add(user)
@@ -104,16 +108,20 @@ def verify_email(
         User.verification_token == token
     ).first()
 
-
-    if not user:
+    if (
+            user.verification_token_expire
+            and user.verification_token_expire < datetime.now(timezone.utc)
+    ):
         raise HTTPException(
             status_code=400,
-            detail="Invalid verification token"
+            detail="Verification token expired"
         )
 
 
     user.is_verified = True
     user.verification_token = None
+    user.verification_token_expire = None
+
 
 
     db.commit()
@@ -146,13 +154,12 @@ def login(
         User.username == form_data.username
     ).first()
 
-
     if (
-        user is None
-        or not verify_password(
-            form_data.password,
-            user.hashed_password
-        )
+            user is None
+            or not verify_password(
+        form_data.password,
+        user.hashed_password
+    )
     ):
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
@@ -161,6 +168,16 @@ def login(
                 "WWW-Authenticate": "Bearer"
             }
         )
+
+    if not user.is_verified:
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="Please verify your email first"
+        )
+
+    access_token = create_access_token(
+        str(user.id)
+    )
 
     access_token = create_access_token(
         str(user.id)
